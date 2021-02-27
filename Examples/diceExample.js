@@ -13,8 +13,8 @@ createTable(frequencyTest(() => d61.roll(), 600000), true)
 console.log("Actual Probabilities of each number appearing in a single roll: ");
 createTable(frequencyEnumeration(() => d61.enumerate(roll => roll)))
 
-console.log("A more complex test: Roll one die, and then another. If the second die is even,\n" +
-    "Roll a third and add all three together. If not, add the first two dice for a score.");
+console.log("A more complex test: Roll three dice. If the second die is even,\n" +
+    "add all three together. If it is not, add the first two dice for a score.");
 
 console.log("Results of Test:");
 
