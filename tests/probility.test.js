@@ -72,7 +72,6 @@ test("add() can add more instances of other choices", () => {
 const addPoolTest = new Probility([1])
 
 test("add() will affect the size of the pool", () => {
-    const initialSize = addPoolTest.pool.length
         addPoolTest.addOne(2)
     expect(addPoolTest.pool.length).toBe(2)
 })
@@ -95,6 +94,21 @@ test("addOne() is a special case of add() that behaves in the same way but alway
 
 
 // Remove
+
+test("remove works normally for objects", () => {
+    let test = new Probility([{name: "Zach"}, {name: "Bob"}, {name: "Alice"}])
+    expect(test.remove(val => val.name === "Zach").numUniqueChoices).toBe(2)
+})
+
+test("remove works as expected for functions", () => {
+    let test = new Probility([(val) => val + 1, (val) => val + 2, (val) => val + 3])
+    expect(test.remove(val => val(1) === 2).numUniqueChoices).toBe(2)
+})
+
+test("remove a function with a limit over 1:", () => {
+    let test = new Probility([(val) => val + 1, (val) => val + 2, (val) => val + 3])
+    expect(test.remove(val => val(1) > 2, 2).numUniqueChoices).toBe(1)
+})
 
 test("remove will affect the number of unique choices", () => {
     let removeTest = new Probility([1,2,3])
