@@ -47,7 +47,8 @@ Results of Test:
 |        14         |  6  | '21865 / 216000' |
 |        15         |  9  | '23917 / 216000' |
 |        16         |  7  | '24216 / 216000' |
-Results of enumeration
+
+Results of enumeration:
 
 | (iteration index) | Key |   Values   |
 :---:|---|---
