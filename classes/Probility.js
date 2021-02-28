@@ -12,7 +12,7 @@ class Probility {
         if (choices instanceof Array) this.initArray(choices)
         else if (choices instanceof Object) this.initObject(choices)
         this.initPool()
-        this.unsafeTotalChoices = this.numTotalChoices
+        // this.unsafeTotalChoices = this.numTotalChoices
 
     }
     /** Returns the number of unique choices in a Probility collection */
@@ -162,7 +162,7 @@ class Probility {
      * @returns {module.RationalNumber}
      */
     singleChoiceProbability(choice) {
-        const total = this.choices.get(choice).totalNumber || 0
+        const total = this.choices.get(choice)?.totalNumber || 0
         return  new RationalNumber(total, this.numTotalChoices)
     }
 
@@ -212,7 +212,7 @@ class Probility {
     /**
      * Returns an array of each of the possible choices after being applied to the given function.
      * This method uses flatMap(), so the method can be called successively in the callback and still return a 1D array.
-     * @param {enumerateCallback} callback
+     * @param {enumerateCallback} funct
      * @returns {unknown[]}
      */
     enumerate(funct) {

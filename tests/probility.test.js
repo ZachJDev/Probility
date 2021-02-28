@@ -140,6 +140,11 @@ test("numTotalChoices and the pool length will be consistent with the number of 
 
 // SingleChoiceProbability
 
+test("singleChoiceProbability will return 0 for a choice not in the collection", () => {
+    const test = new Probility([1,2,3])
+    expect(test.singleChoiceProbability(4).toString()).toBe("0 / 3")
+})
+
 // listAllProbabilities
 
 test("listAllProbabilities() returns a map of the probability of each object being the next choice from the current state", () => {
