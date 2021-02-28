@@ -2,7 +2,7 @@
   "name": "probility",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "Probility.js",
   "scripts": {
     "test": "jest"
   },
