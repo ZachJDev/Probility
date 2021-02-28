@@ -21,7 +21,7 @@ to store and manipulate different states of a single Probility instance.
 **More Coming Soon!!**
 
 ### `class Probility(array)`
-returns a new Probibility instance. Best used by extending or wrapping in a different class:
+The main class for Probility collections. Best used by extending or wrapping in a different class:
 ```Javascript
 const {Probility} = require('Probility')
 class SixSidedDie extends Probility {
@@ -30,6 +30,16 @@ class SixSidedDie extends Probility {
     }
     roll() {
         return this.chooseFromPool()
+    }
+    ...
+}
+// OR //
+class SixSidedDie {
+    constructor(faces = [1,2,3,4,5,6]) {
+        this.prob = new Probility(faces) // Access all the Probility methods in the prob property
+    }
+    roll() {
+        return this.prob.chooseFromPool()
     }
     ...
 }
