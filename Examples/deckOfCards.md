@@ -1,6 +1,6 @@
 # Results of deckOfCardsExample.js:
 
-(slightly edited for better Markdown formatting)
+(slightly edited for better Markdown formatting Actual results may differ for some functions)
 
 Because a deck's deal() method essentially removes it from the choice pool, we should expect
 that testing that function will return equal probability for each card:

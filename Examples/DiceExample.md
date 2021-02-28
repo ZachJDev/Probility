@@ -1,6 +1,6 @@
 # Results of diceExample.js:
 
-(Slightly edited for Markdown formatting)
+(Slightly edited for Markdown formatting. Actual results may differ for some functions)
 
 Results of rolling a die 600000 times:
 
