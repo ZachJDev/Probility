@@ -40,9 +40,9 @@ class Pokemon {
 }
 
 console.log("The chance to escape algorithm in the Pokemon Series of games can be implemented with Probility as well.\n" +
-    "With a correct implementation of Probility, we can calculate how likely a pokemon is to escape another and see the chances enumerated.")
+    "With a correct implementation of Probility, we can calculate how likely a pokemon is to escape another and see the chances enumerated.\n")
 console.log("The algorithm can be found at https://bulbapedia.bulbagarden.net/wiki/Escape. I'll be using Pikachu with a speed stat of 25 and Charizard with a speed stat of 100. \n" +
-    "I don't think these numbers are correct, but they mirror the example on the page.")
+    "I don't think these numbers are correct, but they mirror the example on the page.\n")
 
 const pikachu = new Pokemon("Pikachu", 25)
 const charizard = new Pokemon("Charizard", 100)
@@ -56,8 +56,7 @@ const asPercent = (val) => {
     return `${val * 100}%`
 }
 
-console.log(`Probility will be used as a random number generator, generating numbers between 0 and 255. Using the .probabilityOf() method, \n" +
-    "we can calculate that Pikachu has a ${asPercent(probOfEscape.valueOf())} chance of escaping Charizard.\n`)
+console.log(`Probility will be used as a random number generator, generating numbers between 0 and 255. Using the .probabilityOf() method,\nwe can calculate that Pikachu has a ${asPercent(probOfEscape.valueOf())} chance of escaping Charizard.\n`)
 
 console.log("We can use frequencyTest() to see how often Pikachu escapes out of 10,000 tries: ")
 createTable(frequencyTest(() => {
@@ -66,8 +65,8 @@ createTable(frequencyTest(() => {
 
 console.log("Even though I don't know the numbers as they are exactly, I will guess that Pikachu was able to escape about 2,400 times.\n");
 
-console.log("We can also create ")
-for(let i = 0; i < 5; i++) {
+console.log("We can also create a chart of successive run attempts, as the chance of success increases as the number of attempts increase: ")
+for(let i = 1; i < 5; i++) {
 console.log(`Attempt #${i}: `)
 createTable(frequencyEnumeration(() => speedTest.enumerate(num => {
     return  pikachu.canEscape(pikachu.calcF(charizard, i), num) ? "Pikachu ran away!" : "Can't Escape!"
