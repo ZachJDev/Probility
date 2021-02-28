@@ -20,7 +20,7 @@ to store and manipulate different states of a single Probility instance.
 
 **More Coming Soon!!**
 
-### `new Probility(array)`
+### `class Probility(array)`
 returns a new Probibility instance. Best used by extending or wrapping in a different class:
 ```Javascript
 const {Probility} = require('Probility')
