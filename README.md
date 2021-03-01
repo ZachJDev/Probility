@@ -79,7 +79,7 @@ frequencyTest(() => {
 ### frequencyEnumeration(array)
 
 Returns a mapping of all possible outcomes to their actual probability. It is meant to be used with Probility's `.
-enumerate()` method, though it would most likely work with any array.
+enumerate()` method.
 
 ```javascript
 const {frequencyEnumeration} = require("Probility");
