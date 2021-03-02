@@ -9,7 +9,7 @@
 const createTable = (sourceMap, sort = false, toTable = true) => {
     const results = new Map();
     Array.from(sourceMap.entries()).sort((a, b) => {
-        if(sort) return a[1].valueOf() - b[1].valueOf() // Only sort if specified.
+        if (sort) return a[1].valueOf() - b[1].valueOf() // Only sort if specified.
         else return a
     }).forEach(pair => {
         results.set(pair[0], pair[1].toString())

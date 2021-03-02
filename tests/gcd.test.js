@@ -13,5 +13,5 @@ test("gcd of a number n and 0 is n", () => {
 })
 
 test("gcd of 0 and 0 is 0", () => {
-    expect(gcd(0,0)).toBe(0)
+    expect(gcd(0, 0)).toBe(0)
 })

@@ -8,13 +8,13 @@ const RationalNumber = require('../classes/ratNums')
  */
 frequencyEnumeration = (funct) => {
     const results = new Map();
-        const array = funct();
-        const totalNumber = array.length;
-            array.forEach(val => {
-            results.get(val) ?
-                results.get(val).increment() :
-                results.set(val, new RationalNumber(1, totalNumber));
-        })
+    const array = funct();
+    const totalNumber = array.length;
+    array.forEach(val => {
+        results.get(val) ?
+            results.get(val).increment() :
+            results.set(val, new RationalNumber(1, totalNumber));
+    })
     return results
 }
 module.exports = frequencyEnumeration

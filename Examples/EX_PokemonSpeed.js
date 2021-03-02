@@ -1,9 +1,9 @@
 const {Probility, createTable, frequencyTest, frequencyEnumeration} = require('../Probility');
 
 const range = (start, stop, step) =>
-    Array.from({ length: (stop - start) / step + 1}, (_, i) => start + (i * step));
+    Array.from({length: (stop - start) / step + 1}, (_, i) => start + (i * step));
 
-class pickFrom256 extends Probility{
+class pickFrom256 extends Probility {
     constructor() {
         super(range(0, 255, 1))
     }
@@ -20,13 +20,15 @@ class Pokemon {
         this.speed = speed;
         this.name = name;
     }
+
     attemptEscape(opponentPokemon, attempt) {
         const F = this.calcF(opponentPokemon, attempt);
-        const randomNum  = speedTest.getNumber();
+        const randomNum = speedTest.getNumber();
         return this.canEscape(F, randomNum)
     }
+
     canEscape(F, randomNum) {
-     return F > 255 || randomNum < F;
+        return F > 255 || randomNum < F;
 
     }
 
@@ -66,9 +68,9 @@ createTable(frequencyTest(() => {
 console.log("Even though I don't know the numbers as they are exactly, I will guess that Pikachu was able to escape about 2,400 times.\n");
 
 console.log("We can also create a chart of successive run attempts, as the chance of success increases as the number of attempts increase: ")
-for(let i = 1; i < 5; i++) {
-console.log(`Attempt #${i}: `)
-createTable(frequencyEnumeration(() => speedTest.enumerate(num => {
-    return  pikachu.canEscape(pikachu.calcF(charizard, i), num) ? "Pikachu ran away!" : "Can't Escape!"
-})))
+for (let i = 1; i < 5; i++) {
+    console.log(`Attempt #${i}: `)
+    createTable(frequencyEnumeration(() => speedTest.enumerate(num => {
+        return pikachu.canEscape(pikachu.calcF(charizard, i), num) ? "Pikachu ran away!" : "Can't Escape!"
+    })))
 }

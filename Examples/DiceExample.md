@@ -24,9 +24,8 @@ Actual Probabilities of each number appearing in a single roll:
 |         4         |  5  | '1 / 6' |
 |         5         |  6  | '1 / 6' |
 
-A more complex test: Roll three dice. If the second die is even,
-add all three together. If it is not, add the first two dice for a score.
-Results of Test:
+A more complex test: Roll three dice. If the second die is even, add all three together. If it is not, add the first two
+dice for a score. Results of Test:
 
 | (iteration index) | Key |      Values      |
 :---:|---|---|
@@ -72,8 +71,8 @@ Results of enumeration:
 
 Using functions as choices:
 
-With a loudCoin, which tells us to whisper or a yell a word, and a wordD6, which gives us the name of a face
-we can call loudCoin.flip()(wordD6.roll()) to be given a yelled or whispered face name: three
+With a loudCoin, which tells us to whisper or a yell a word, and a wordD6, which gives us the name of a face we can call
+loudCoin.flip()(wordD6.roll()) to be given a yelled or whispered face name: three
 
 | (iteration index) |   Key   |  Values  |
 ---|---|---
