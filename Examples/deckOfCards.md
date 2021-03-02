@@ -2,10 +2,10 @@
 
 (slightly edited for better Markdown formatting Actual results may differ for some functions)
 
-Because a deck's deal() method essentially removes it from the choice pool, we should expect
-that testing that function will return equal probability for each card:
+Because a deck's deal() method essentially removes it from the choice pool, we should expect that testing that function
+will return equal probability for each card:
 
- (iteration index) |  Key  |    Values    
+(iteration index) |  Key  |    Values
 :---:|---|---
 |         0         | '9♣'  | '100 / 5200' |
 |         1         | '3♦'  | '100 / 5200' |
@@ -60,11 +60,9 @@ that testing that function will return equal probability for each card:
 |        50         | '8♥'  | '100 / 5200' |
 |        51         | '3♠'  | '100 / 5200' |
 
-
 However, testing the chooseAndReplace() method will return close to, but not exactly the same probabilities:
 
-
- iteration index |  Key  |    Values    
+iteration index |  Key  |    Values
 :---:|---|---
 |         0         | '8♦'  | '101 / 5200' |
 |         1         | '3♥'  | '101 / 5200' |
@@ -124,10 +122,12 @@ There are 4 / 52 in the deck, or a 1 / 13 chance of choosing one.
 
 We can also use enumeration to find the chance of pulling two aces:
 
-With Replacing the card, we have a 1 / 169 chance of pulling two aces in a row.
-Without Replacing, we have a 1 / 221 chance of pulling two aces in a row.
+With Replacing the card, we have a 1 / 169 chance of pulling two aces in a row. Without Replacing, we have a 1 / 221
+chance of pulling two aces in a row.
 
 But one thing to remember is that enumerating probability spaces this way can become resource hungry very quickly.
-Sometimes it's better to calculate the probabilities directly with the Rational Number objects that represent probabilities in this library.
+Sometimes it's better to calculate the probabilities directly with the Rational Number objects that represent
+probabilities in this library.
 
-One more thing to try: call the new StdDeck() constructor with the `hasJokers` parameter as `true`, and see how the numbers change.
+One more thing to try: call the new StdDeck() constructor with the `hasJokers` parameter as `true`, and see how the
+numbers change.

@@ -1,7 +1,7 @@
 RationalNumber = require('../classes/ratNums')
 
 const x = new RationalNumber(31, 948);
-const y = new RationalNumber( 511, 1937);
+const y = new RationalNumber(511, 1937);
 
 // Construction
 
@@ -10,11 +10,11 @@ test("Numbers are not automatically simplified", () => {
 })
 
 test("0 as a denominator will throw an error", () => {
-    expect(() => new RationalNumber(1,0)).toThrow(/zero/)
+    expect(() => new RationalNumber(1, 0)).toThrow(/zero/)
 })
 
 test("the numerator will be negative if only the supplied numerator is negative", () => {
-    expect(new RationalNumber( -2, 4).toString()).toBe("-2 / 4")
+    expect(new RationalNumber(-2, 4).toString()).toBe("-2 / 4")
 })
 
 test("Only the numerator will be negative if the only the supplied denominator is negative", () => {
@@ -71,11 +71,11 @@ test("Division by zero will throw an error", () => {
 // Inverting
 
 test("Inverting a number will switch its numerator and denominator", () => {
-    expect(new RationalNumber(1,2).invert().toString()).toBe("2 / 1")
+    expect(new RationalNumber(1, 2).invert().toString()).toBe("2 / 1")
 })
 
 test('Inverting 0 will throw an error', () => {
-    expect(() => new RationalNumber(0,9).invert()).toThrowError(/zero/)
+    expect(() => new RationalNumber(0, 9).invert()).toThrowError(/zero/)
 })
 
 // Simplifying

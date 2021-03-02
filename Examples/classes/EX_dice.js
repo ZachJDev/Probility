@@ -7,30 +7,35 @@ class Die {
     constructor(faces) {
         this.prob = new Probility(faces)
     }
+
     roll() {
         return this.prob.chooseFromPool()
     }
+
     slowRoll() {
         return this.prob.choose()
     }
+
     enumerate(funct) {
         return this.prob.enumerate(funct)
     }
 
 }
+
 class Coin extends Die {
     constructor(faces = ["heads", "tails"]) {
-        if(faces.length !== 2) throw new Error(createDieErrorMsg("coin", 2, faces.length))
+        if (faces.length !== 2) throw new Error(createDieErrorMsg("coin", 2, faces.length))
         super(faces);
     }
+
     flip() {
         return this.prob.chooseFromPool()
     }
 }
 
 class D6 extends Die {
-    constructor(faces = [1,2,3,4,5,6]) {
-        if(faces.length !== 6) throw new Error(createDieErrorMsg("D6", 6, faces.length))
+    constructor(faces = [1, 2, 3, 4, 5, 6]) {
+        if (faces.length !== 6) throw new Error(createDieErrorMsg("D6", 6, faces.length))
         super(faces);
     }
 }

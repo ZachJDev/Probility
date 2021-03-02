@@ -21,8 +21,8 @@ console.log("Results of Test:");
 createTable(frequencyTest(() => {
     const roll1 = d61.roll();
     const roll2 = d62.roll();
-    if(roll2 % 2 === 0) {
-       return roll1 + roll2 + d63.roll();
+    if (roll2 % 2 === 0) {
+        return roll1 + roll2 + d63.roll();
     } else return roll1 + roll2
 }, 216000), true);
 
@@ -32,8 +32,8 @@ createTable(frequencyEnumeration(() => {
     return d61.enumerate(roll1 => {
             return d62.enumerate(roll2 => {
                 return d63.enumerate(roll3 => {
-                    if(roll2 % 2 === 0) return roll3 + roll2 + roll1
-                return roll1 + roll2
+                    if (roll2 % 2 === 0) return roll3 + roll2 + roll1
+                    return roll1 + roll2
                 })
             });
         }

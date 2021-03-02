@@ -1,54 +1,63 @@
 # Probility
 
-Probility is a WIP progress library that aims to provide an easy-to-understand interface for creating probability distributions and generating data from those distributions.
+Probility is a WIP progress library that aims to provide an easy-to-understand interface for creating probability
+distributions and generating data from those distributions.
 
-Probility provides both a class to interface with data collections and a set of functions to generate practical 
-tests of outcomes and theoretical enumerations of expected outcomes for complex probability rules. 
+Probility provides both a class to interface with data collections and a set of functions to generate practical tests of
+outcomes and theoretical enumerations of expected outcomes for complex probability rules.
 
-To see the current power of Probility, please check out the "Examples" folder and run the sample code in Node. 
-Example output is provided in the Markdown files, but running the code and looking at how the examples are 
-constructed should give a much clearer picture of how everything works behind the scenes.
+To see the current power of Probility, please check out the "Examples" folder and run the sample code in Node. Example
+output is provided in the Markdown files, but running the code and looking at how the examples are constructed should
+give a much clearer picture of how everything works behind the scenes.
 
 ## Why Probility?
 
-My game-designer coworker trying to work out various combinations of die rolls using an Excel table initially 
-inspired this project. I hope that, as it works now, Probility provides an easy way to interface with, describe, and 
-explore probabilistic collections of data. In the future, I hope to make it even more robust by allowing developers 
-to store and manipulate different states of a single Probility instance.
+My game-designer coworker trying to work out various combinations of die rolls using an Excel table initially inspired
+this project. I hope that, as it works now, Probility provides an easy way to interface with, describe, and explore
+probabilistic collections of data. In the future, I hope to make it even more robust by allowing developers to store and
+manipulate different states of a single Probility instance.
 
 ## API Reference
 
 **More Coming Soon!!**
 
 ### `class Probility(array)`
+
 The main class for Probility collections. Best used by extending or wrapping in a different class:
+
 ```Javascript
 const {Probility} = require('Probility')
+
 class SixSidedDie extends Probility {
     constructor() {
-        super([1,2,3,4,5,6])
+        super([1, 2, 3, 4, 5, 6])
     }
+
     roll() {
         return this.chooseFromPool()
     }
-    ...
+
+...
 }
+
 // OR //
 class SixSidedDie {
-    constructor(faces = [1,2,3,4,5,6]) {
+    constructor(faces = [1, 2, 3, 4, 5, 6]) {
         this.prob = new Probility(faces) // Access all the Probility methods in the prob property
     }
+
     roll() {
         return this.prob.chooseFromPool()
     }
-    ...
+
+...
 }
 ```
 
 ### `frequencyTest(callback, n)`
 
-Calls the callback `n`  times and returns a new Map of the results mapped to the number of times the result occurred 
-out of `n`. The values of the Map are Rational Numbers, an included class:
+Calls the callback `n`  times and returns a new Map of the results mapped to the number of times the result occurred out
+of `n`. The values of the Map are Rational Numbers, an included class:
 
 ```javascript
 const {frequencyTest} = require('Probility')
@@ -78,8 +87,8 @@ frequencyTest(() => {
 
 ### frequencyEnumeration(array)
 
-Returns a mapping of all possible outcomes to their actual probability. It is meant to be used with Probility's `.
-enumerate()` method.
+Returns a mapping of all possible outcomes to their actual probability. It is meant to be used with
+Probility's `. enumerate()` method.
 
 ```javascript
 const {frequencyEnumeration} = require("Probility");

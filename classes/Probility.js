@@ -2,9 +2,9 @@ const ProbabilitiyCollection = require('./ProbabilityCollection')
 const RationalNumber = require('./ratNums')
 
 /**
-* The base Probility class. Represents a collection of things.
-* @constructor
-* @param {array} choices - an array of the possible choices.
+ * The base Probility class. Represents a collection of things.
+ * @param {array} choices - an array of the possible choices.
+ * @constructor
  */
 class Probility {
     constructor(choices = []) {
@@ -15,14 +15,17 @@ class Probility {
         // this.unsafeTotalChoices = this.numTotalChoices
 
     }
+
     /** Returns the number of unique choices in a Probility collection */
     get numUniqueChoices() {
         return new Set(this.possibleChoices).size
     }
+
     /** Returns an array of every unique choice in a Probility collection */
     get possibleChoices() {
         return Array.from(this.choices.keys())
     }
+
     /** The number of total choices in a Probility collection. I.e. the sum of the total number of occurences of
      * each unique choice
      * */
@@ -32,6 +35,11 @@ class Probility {
         // But a lot easier to maintain.
         return Array.from(this.choices.values(), (value) => value.totalNumber)
             .reduce((acc, cur) => acc + cur, 0)
+    }
+
+    static copyChoices(probility) {
+        if (!probility instanceof Probility) throw new Error(`expected probility to be instance of Probility`)
+        return new Probility(probility.pool);
     }
 
     /**
@@ -63,8 +71,8 @@ class Probility {
      */
     initPool() {
         this.pool = [];
-        for(let choice of this.choices) {
-            for(let i = 0; i < choice[1].totalNumber; i++) this.pool.push(choice[0])
+        for (let choice of this.choices) {
+            for (let i = 0; i < choice[1].totalNumber; i++) this.pool.push(choice[0])
         }
     }
 
@@ -76,7 +84,7 @@ class Probility {
      * @returns {any}
      */
     choose() {
-        if(this.numTotalChoices <= 0) throw new Error("No choices remain")
+        if (this.numTotalChoices <= 0) throw new Error("No choices remain")
         while (true) {
             const choice = this.getRandomChoice()
             const p = this.singleChoiceProbability(choice).valueOf()
@@ -126,10 +134,10 @@ class Probility {
     remove(predicate, limit = 1) {
         const newChoices = new Map();
         Array.from(this.choices.keys()).forEach((key) => {
-            if(!predicate(key) || limit === 0) newChoices.set(key, this.choices.get(key))
+            if (!predicate(key) || limit === 0) newChoices.set(key, this.choices.get(key))
             else { // when we do match the predicate
                 let match = this.choices.get(key)
-                if(match.totalNumber > limit) {
+                if (match.totalNumber > limit) {
                     match.totalNumber -= limit
                     newChoices.set(key, match)
                     limit = 0;
@@ -163,7 +171,7 @@ class Probility {
      */
     singleChoiceProbability(choice) {
         const total = this.choices.get(choice)?.totalNumber || 0
-        return  new RationalNumber(total, this.numTotalChoices)
+        return new RationalNumber(total, this.numTotalChoices)
     }
 
     /**
@@ -175,7 +183,7 @@ class Probility {
     probabilityOf(predicate) {
         let total = 0;
         this.choices.forEach(val => {
-            if(predicate(val.value)) total+= val.totalNumber
+            if (predicate(val.value)) total += val.totalNumber
         })
         return new RationalNumber(
             total,
@@ -217,10 +225,6 @@ class Probility {
      */
     enumerate(funct) {
         return this.possibleChoices.flatMap(funct)
-    }
-    static copyChoices(probility) {
-        if(!probility instanceof Probility) throw new Error(`expected probility to be instance of Probility`)
-        return new Probility(probility.pool);
     }
 }
 

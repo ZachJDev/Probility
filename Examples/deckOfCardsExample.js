@@ -7,14 +7,14 @@ console.log("Because a deck's deal() method essentially removes it from the choi
 createTable(frequencyTest(() => {
     const card = deck.deal()
     return `${card.rank}${card.suit}`
-}, 52*100))
+}, 52 * 100))
 
 console.log("However, testing the chooseAndReplace() method will return close to, but not exactly the same probabilities:")
 deck.initCards()
 createTable(frequencyTest(() => {
     const card = deck.chooseAndReplace()
     return `${card.rank}${card.suit}`
-}, 52*100))
+}, 52 * 100))
 
 console.log("We can use probabilityOf() to find the number of aces in the deck:")
 const aces = deck.probabilityOf((card) => card.rank === "A")
@@ -26,7 +26,7 @@ console.log("We can also use enumeration to find the chance of pulling two aces:
 const withReplacing = frequencyEnumeration(() => {
     return deck.enumerate((card1) => {
         return deck.enumerate((card2) => {
-            if(card1.rank === "A" && card2.rank === 'A') return "Two Aces"
+            if (card1.rank === "A" && card2.rank === 'A') return "Two Aces"
             return "Other"
         })
     })
@@ -38,7 +38,7 @@ const withoutReplacing = frequencyEnumeration(() => {
             // TODO: find a better way of representing the previous card in the deck. Should be possible using the instance of Card1
             .prob.remove((card) => card1.rank === card.rank && card1.suit === card.suit)
         return newDeck.enumerate(card2 => {
-            if(card1.rank === "A" && card2.rank === "A") return "Two Aces"
+            if (card1.rank === "A" && card2.rank === "A") return "Two Aces"
             return "Other"
         })
     })
