@@ -3,6 +3,7 @@ const lcm = require("../functions/lcm")
 
 module.exports = class RationalNumber {
     constructor(numerator, denominator = 1) {
+        if(numerator % 1 !== 0 || denominator % 1 !== 0) throw new Error("numerator and denominator must be whole numbers.")
         if (denominator === 0) throw new Error("Dividing by zero is undefined");
         if(numerator < 0 ? !(denominator < 0) : (denominator < 0)) { // XOR for negative rational numbers
             this.numerator = 0 - Math.abs(numerator);
@@ -54,13 +55,24 @@ module.exports = class RationalNumber {
         ++this.numerator;
         return this
     }
+    get isNegative() {
+        return this.numerator < 0
+    }
+    get isWhole() {
+        return this.denominator === 1
+    }
     newBase(num) {
        const factor = num / this.denominator
         if(!Number.isInteger(num)) throw new Error("Denominators must be whole numbers")
         const newNum = this.numerator * factor;
-       const newDemon = this.denominator * factor;
-       if(!Number.isInteger(newNum)) throw new Error("bases do not share a common factor")
+        if(!Number.isInteger(newNum)) throw new Error("bases do not share a common factor")
         return new RationalNumber(this.numerator * factor, this.denominator * factor);
+    }
+    static normalizeBases(...args) {
+        args.forEach(arg => {
+            if (!arg instanceof RationalNumber) throw new Error("Arguments must be rational Numbers.")
+        })
+        return lcm(...args.map(arg => arg.denominator))
     }
 }
 

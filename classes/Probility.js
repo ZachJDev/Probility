@@ -1,5 +1,6 @@
 const ProbabilitiyCollection = require('./ProbabilityCollection')
 const RationalNumber = require('./ratNums')
+const objectHandler = require("./ObjectHandler")
 
 /**
  * The base Probility class. Represents a collection of things.
@@ -7,11 +8,22 @@ const RationalNumber = require('./ratNums')
  * @constructor
  */
 class Probility {
-    constructor(choices = []) {
+    constructor(choices = [], options) {
         this.choices = new Map()
-        if (choices instanceof Array) this.initArray(choices)
-        else if (choices instanceof Object) this.initObject(choices)
-        this.initPool()
+
+        this.options = {
+            parseArray: options?.parseArray ?? false,
+            usePool: options?.usePool ?? true
+        }
+
+        if (this.options.parseArray) {
+            this.parsedChoices = objectHandler.parseArray(choices)
+            this.initObject()
+        }
+        else this.initArray(choices)
+
+        if (this.options.usePool) this.initPool()
+
         // this.unsafeTotalChoices = this.numTotalChoices
 
     }
@@ -60,9 +72,15 @@ class Probility {
      * @Private
      * @param choices
      */
-    initObject(choices) {
+    initObject() {
+        //
         // TODO: add method for initializing an object
-        console.log(choices + "is an Object");
+        for(let choice of this.parsedChoices) {
+            let value = choice[0];
+            let numberOf = choice[1].numerator
+            this.add(value, numberOf)
+        }
+
     }
 
     /**
@@ -95,10 +113,13 @@ class Probility {
     }
 
     /**
-     * Chooses a random object from the pool, an array of every discrete object in the collection.
+     * Chooses a random object from the pool, an array of every discrete object in the collection. Not usable if
+     * the usePool option is set to false.
      * @returns {*}
      */
     chooseFromPool() {
+        if(!this.options.usePool) throw new Error("Cannot call chooseFromPool() if the usePool option was set to false." +
+            "to use chooseFromPool, instantiate a new Probility with the usePool option set to true.")
         return this.pool[this.getRandomNumberFromTotal()]
     }
 
@@ -111,7 +132,7 @@ class Probility {
     add(choice, num) {
         this.choices.get(choice) ? this.choices.get(choice).increment(num) :
             this.choices.set(choice, new ProbabilitiyCollection(choice, num))
-        this.initPool()
+        if(this.options.usePool) this.initPool()
         return this
     }
 
