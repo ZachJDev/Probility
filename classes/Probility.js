@@ -19,8 +19,7 @@ class Probility {
         if (this.options.parseArray) {
             this.parsedChoices = objectHandler.parseArray(choices)
             this.initObject()
-        }
-        else this.initArray(choices)
+        } else this.initArray(choices)
 
         if (this.options.usePool) this.initPool()
 
@@ -75,7 +74,7 @@ class Probility {
     initObject() {
         //
         // TODO: add method for initializing an object
-        for(let choice of this.parsedChoices) {
+        for (let choice of this.parsedChoices) {
             let value = choice[0];
             let numberOf = choice[1].numerator
             this.add(value, numberOf)
@@ -118,7 +117,7 @@ class Probility {
      * @returns {*}
      */
     chooseFromPool() {
-        if(!this.options.usePool) throw new Error("Cannot call chooseFromPool() if the usePool option was set to false." +
+        if (!this.options.usePool) throw new Error("Cannot call chooseFromPool() if the usePool option was set to false." +
             "to use chooseFromPool, instantiate a new Probility with the usePool option set to true.")
         return this.pool[this.getRandomNumberFromTotal()]
     }
@@ -130,9 +129,11 @@ class Probility {
      * @returns {Probility}
      */
     add(choice, num) {
-        this.choices.get(choice) ? this.choices.get(choice).increment(num) :
-            this.choices.set(choice, new ProbabilitiyCollection(choice, num))
-        if(this.options.usePool) this.initPool()
+        if (num > 0) {
+            this.choices.get(choice) ? this.choices.get(choice).increment(num) :
+                this.choices.set(choice, new ProbabilitiyCollection(choice, num))
+            if (this.options.usePool) this.initPool()
+        }
         return this
     }
 
@@ -155,7 +156,7 @@ class Probility {
     remove(predicate, limit = 1) {
         const newChoices = new Map();
         Array.from(this.choices.keys()).forEach((key) => {
-            if (!predicate(key) || limit === 0) newChoices.set(key, this.choices.get(key))
+            if (!predicate(key) || limit <= 0) newChoices.set(key, this.choices.get(key))
             else { // when we do match the predicate
                 let match = this.choices.get(key)
                 if (match.totalNumber > limit) {

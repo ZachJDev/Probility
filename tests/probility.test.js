@@ -70,6 +70,11 @@ test("add() can add more instances of other choices", () => {
     expect(addTest.add(2, 3).probabilityOf(val => val === 2).toString()).toBe("4 / 6")
 })
 
+test("add() with zero will silently do nothing:", () => {
+    const x = new Probility([1, 2, 3, 4]).add(5, 0).listAllProbabilities()
+    expect(x.get(5)).toBeUndefined()
+})
+
 const addPoolTest = new Probility([1])
 
 test("add() will affect the size of the pool", () => {
@@ -121,6 +126,11 @@ test("remove will affect the number of possible choices", () => {
     expect(removeTest.remove((val) => val === 2).numTotalChoices).toBe(2)
 })
 
+test("remove with zero or less will silently do nothing", () => {
+    expect(new Probility([1, 2, 3]).remove(val => val === 1, -1).singleChoiceProbability(1)
+        .toString()).toBe("1 / 3")
+})
+
 test("remove affects the size of the pool", () => {
     const removeTest = new Probility([1, 2, 3])
     expect(removeTest.remove(val => val === 2).pool.length).toBe(2)
@@ -136,6 +146,15 @@ test("numTotalChoices and the pool length will be consistent with the number of 
     removeTest.remove(val => val === 3, 1000)
     expect(removeTest.numTotalChoices === removeTest.pool.length &&
         removeTest.pool.length === 2).toBe(true)
+})
+
+test("Calling chooseFromPool() will throw an error if called without the usePool: true option", () => {
+    expect(()=> new Probility([1,2,3], {usePool: false}).chooseFromPool()).toThrow(/usePool/)
+})
+
+test("accessing the pool property will return undefined without the usePool: true option", () => {
+    expect(new Probility([1,2,3], {usePool: false}).pool).toBeUndefined()
+
 })
 
 

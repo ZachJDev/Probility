@@ -19,8 +19,9 @@ class ProbilityObjectHandler {
             } else {
 
                 const ratio = this.parseKey(key);
-                if(ratio.isNegative) throw new Error(`values cannot have negative probabilities received ${key}`)
-                tempMap.set(value, ratio)
+                if (ratio.isNegative) throw new Error(`values cannot have negative probabilities received ${key}`)
+                if (!ratio.isZero)
+                    tempMap.set(value, ratio)
             }
         }
         return this.makeFinalMap(tempMap, remainderVal)
@@ -29,11 +30,11 @@ class ProbilityObjectHandler {
     makeFinalMap(initialMap, remainderVal) {
         let normalBase; // will hold normalized base
         if (this.areAllWhole(initialMap)) {
-            if(remainderVal !==null) throw new Error("Remainders cannot be used with whole Numbers.")
+            if (remainderVal !== null) throw new Error("Remainders cannot be used with whole Numbers.")
             normalBase = this.getBaseFromWholes(initialMap);
         } // adds whole numbers for new base
         else normalBase = RationalNumber.normalizeBases(...Array.from(initialMap.values()).map(val =>
-        val.simplify())) // normalizes other bases
+            val.simplify())) // normalizes other bases
 
         const finalMap = new Map()
         let finalTest = new RationalNumber(0, normalBase) // will accumulate the total of all probabilities
