@@ -58,7 +58,8 @@ const asPercent = (val) => {
     return `${val * 100}%`
 }
 
-console.log(`Probility will be used as a random number generator, generating numbers between 0 and 255. Using the .probabilityOf() method,\nwe can calculate that Pikachu has a ${asPercent(probOfEscape.valueOf())} chance of escaping Charizard.\n`)
+console.log(`Probility will be used as a random number generator, generating numbers between 0 and 255. Using the .probabilityOf() method,\n
+we can calculate that Pikachu has a ${asPercent(probOfEscape.valueOf())} chance of escaping Charizard.\n`)
 
 console.log("We can use frequencyTest() to see how often Pikachu escapes out of 10,000 tries: ")
 createTable(frequencyTest(() => {
