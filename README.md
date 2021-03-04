@@ -79,7 +79,7 @@ objects.
 
 `usePool : false` will skip any pool initialization and cause the `chooseFomPool()` method to return an error. This is
 useful when dealing with very large collections of objects that have different probabilities of being chosen. In most
-cases, `usePool` can be left as `true`; it's only downside is the size of the created array, and the speed gained
+cases, `usePool` can be left as `true`; its only downside is the size of the created array, and the speed gained
 from `chooseFromPool()` is usually worth it.
 
 ### `frequencyTest(callback, n)`
