@@ -9,7 +9,7 @@ test("ObjectHandler will init an array of objects", () => {
 
 test("ObjectHandler will initialize objects correctly with mixed ratios and percents", () => {
     expect(ObjectHandler.parseArray([{"12.46%": "red"}, {"1254/10000": "blue"}, {"25/100": "pink"},
-        {"1/4": "green"}, {"25%": "purple"}])
+        {"1/4": "green"}, {"25%": "purple"}], 10000)
         .get("green").valueOf())
         .toBe(.25)
 })

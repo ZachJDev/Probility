@@ -2,9 +2,11 @@ const RationalNumber = require('../classes/ratNums')
 
 class ProbilityObjectHandler {
     constructor() {
+        this.tempTotal = null // Used as a state variable to be accessed in methods. Will change on different calls.
     }
 
-    parseArray(array) {
+    parseArray(array, total) {
+        this.tempTotal = total;
         const tempMap = new Map()
         let remainderVal = null
 
@@ -24,6 +26,7 @@ class ProbilityObjectHandler {
                     tempMap.set(value, ratio)
             }
         }
+        this.tempTotal = null; // reset tempTotal.
         return this.makeFinalMap(tempMap, remainderVal)
     }
 
@@ -33,15 +36,14 @@ class ProbilityObjectHandler {
             if (remainderVal !== null) throw new Error("Remainders cannot be used with whole Numbers.")
             normalBase = this.getBaseFromWholes(initialMap);
         } // adds whole numbers for new base
-        else normalBase = RationalNumber.normalizeBases(...Array.from(initialMap.values()).map(val =>
-            val.simplify())) // normalizes other bases
+        else normalBase = RationalNumber.normalizeBases(...Array.from(initialMap.values())) // normalizes other bases
 
         const finalMap = new Map()
         let finalTest = new RationalNumber(0, normalBase) // will accumulate the total of all probabilities
 
         for (let entry of initialMap.entries()) {
-            const key = entry[0];
-            const value = entry[1];
+            const key = entry[0]; // The 'choice'
+            const value = entry[1]; // the ratio
             let newRatio; // will hold the new ratio for the final probability
             // Normalize whole numbers
             if (value.valueOf() >= 1) newRatio = new RationalNumber(value.numerator, normalBase)
@@ -98,13 +100,13 @@ class ProbilityObjectHandler {
         const asNum = num.split("%")[0] // Get rid of the percent with split("%") and get the value out of the array.
         if (asNum > 100) throw new Error("Cannot add more than 100%")
         // Handles percents with up to two decimal places.
-        return new RationalNumber(asNum * 100, 10000).simplify()
+        return new RationalNumber(asNum * 100, 10000).simplify().newBase(this.tempTotal)
 
     }
 
     parseRationalNumber(ratNum) {
         const nums = ratNum.split("/")
-        const newNum = new RationalNumber(nums[0], nums[1])
+        const newNum = new RationalNumber(nums[0], nums[1]).newBase(this.tempTotal)
         if (newNum.valueOf() > 1) throw new Error("Rational numbers must not be over one.")
         return newNum
 

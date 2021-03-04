@@ -84,6 +84,7 @@ module.exports = class RationalNumber {
     }
 
     newBase(num) {
+        if(!num) return this
         const factor = num / this.denominator
         if (!Number.isInteger(num)) throw new Error("Denominators must be whole numbers")
         const newNum = this.numerator * factor;

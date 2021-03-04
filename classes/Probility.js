@@ -13,11 +13,12 @@ class Probility {
 
         this.options = {
             parseArray: options?.parseArray ?? false,
-            usePool: options?.usePool ?? true
+            usePool: options?.usePool ?? true,
+            total: options?.total // if total isn't specified, keep it null.
         }
 
         if (this.options.parseArray) {
-            this.initObject(objectHandler.parseArray(choices))
+            this.initObject(objectHandler.parseArray(choices, this.options.total))
         } else this.initArray(choices)
 
         if (this.options.usePool) this.initPool()
