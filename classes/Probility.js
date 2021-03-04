@@ -17,13 +17,10 @@ class Probility {
         }
 
         if (this.options.parseArray) {
-            this.parsedChoices = objectHandler.parseArray(choices)
-            this.initObject()
+            this.initObject(objectHandler.parseArray(choices))
         } else this.initArray(choices)
 
         if (this.options.usePool) this.initPool()
-
-        // this.unsafeTotalChoices = this.numTotalChoices
 
     }
 
@@ -67,14 +64,14 @@ class Probility {
 
     /**
      * Initializes a new Probility collection from an object.
-     * NOT YET IMPLEMENTED
+     *
      * @Private
      * @param choices
      */
-    initObject() {
+    initObject(choices) {
         //
         // TODO: add method for initializing an object
-        for (let choice of this.parsedChoices) {
+        for (let choice of choices) {
             let value = choice[0];
             let numberOf = choice[1].numerator
             this.add(value, numberOf)
@@ -246,7 +243,8 @@ class Probility {
      * @returns {unknown[]}
      */
     enumerate(funct) {
-        return this.possibleChoices.flatMap(funct)
+        if(!this.options.usePool) throw new Error("Cannot enumerate choice when usePool is false.")
+        return this.pool.flatMap(funct)
     }
 }
 

@@ -21,7 +21,7 @@ manipulate different states of a single Probility instance.
 
 **More Coming Soon!!**
 
-### `class Probility(array)`
+### `class Probility(array, [options])`
 
 The main class for Probility collections. Best used by extending or wrapping in a different class:
 
@@ -52,7 +52,35 @@ class SixSidedDie {
 
 ...
 }
+
+// creating a new instance with an array describing the state:
+
+const urn = new Probility([{"25%": "red ball"}, {"25%": "green ball"},
+    {"1/4": "purple ball"},
+    {"remainder": "black ball"}], {parseArray: true})
+
+// Parse array must be true. If not, we'd have a collection of three objects
+// with equal probability to be chosen.
 ```
+
+#### `array`:
+
+The array can either be a collection of discrete choices (like the `sixSidedDie` example), or a description of the
+probability state using ratios, percents, or the `remainder` identifier (like in the `urn` example) or whole numbers.
+Whole numbers cannot be mixed with ratios or percents and cannot also have a `remainder` object in the same array. To
+describe the state in the second way, the `parseArray` option must be `true` when calling the constructor.
+
+#### `options`:
+
+Currently, there are two accepted options: `parseArray: boolean` and `usePool: boolean`. Setting `parseArray` to true
+will cause the Probility constructor to interpret the array as an array of objects, each of which describe the amount of
+a given choice. It is `false` by default, which will cause the constructor to read the array as a collection of discrete
+objects.
+
+`usePool : false` will skip any pool initialization and cause the `chooseFomPool()` method to return an error. This is
+useful when dealing with very large collections of objects that have different probabilities of being chosen. In most
+cases, `usePool` can be left as `true`; it's only downside is the size of the created array, and the speed gained
+from `chooseFromPool()` is usually worth it.
 
 ### `frequencyTest(callback, n)`
 
