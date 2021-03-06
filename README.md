@@ -101,17 +101,17 @@ array). It will **not** override the totals if whole numbers are used; it is use
 ratios and percents that will later need choices added or removed. A high total will correlate to a large pool, so space
 concerns may factor into it's usefulness for your use case.
 
-### `frequencyTest(callback, n)`
+### `Probility.frequencyTest(callback, n)`
 
 Calls the callback `n`  times and returns a new Map of the results mapped to the number of times the result occurred out
 of `n`. The values of the Map are Rational Numbers, an included class:
 
 ```javascript
-const {frequencyTest} = require('Probility')
+const {Probility} = require('Probility')
 
 const d6 = new SixSidedDie();
 
-frequencyTest(() => d6.roll(), 6000)
+Probility(() => d6.roll(), 6000)
 
 //  Map(6) {
 //    6 => RationalNumber { numerator: 1019, denominator: 6000 },
@@ -122,7 +122,7 @@ frequencyTest(() => d6.roll(), 6000)
 //    4 => RationalNumber { numerator: 957, denominator: 6000 }
 // }
 
-frequencyTest(() => {
+Probility.frequencyTest(() => {
     return d6.roll() % 2 === 0 ? "Even" : "Odd"
 }, 6000)
 
@@ -132,15 +132,15 @@ frequencyTest(() => {
 // }
 ```
 
-### `frequencyEnumeration(array)`
+### `Probility.frequencyEnumeration(array)`
 
 Returns a mapping of all possible outcomes to their actual probability. It is meant to be used with
 Probility's `. enumerate()` method.
 
 ```javascript
-const {frequencyEnumeration} = require("Probility");
+const {Probility} = require("Probility");
 
-frequencyEnumeration(() => {
+Probility.frequencyEnumeration(() => {
     return d6.enumerate((roll1) => {
         return d6.enumerate((roll2) => roll1 + roll2)
     })
@@ -160,7 +160,7 @@ frequencyEnumeration(() => {
 //   12 => RationalNumber { numerator: 1, denominator: 36 }
 // }
 
-frequencyEnumeration(() => {
+Probility.frequencyEnumeration(() => {
     return d6.enumerate((roll1) => {
         return d6.enumerate((roll2) => (roll1 + roll2) % 2 === 0 ? "Even" : "Odd")
     })
