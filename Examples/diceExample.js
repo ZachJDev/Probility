@@ -1,5 +1,5 @@
 const {D6, Coin} = require('./classes/EX_dice')
-const {createTable, frequencyTest, frequencyEnumeration} = require('../functions/EnumerationAndTableFunctions')
+const {Probility} = require('../Probility')
 
 // Examples //
 const d61 = new D6()
@@ -8,17 +8,17 @@ const d63 = new D6()
 
 
 console.log("Results of rolling a die 600000 times: ")
-createTable(frequencyTest(() => d61.roll(), 600000), true)
+Probility.createTable(Probility.frequencyTest(() => d61.roll(), 600000), true)
 
 console.log("Actual Probabilities of each number appearing in a single roll: ");
-createTable(frequencyEnumeration(() => d61.enumerate(roll => roll)))
+Probility.createTable(Probility.frequencyEnumeration(() => d61.enumerate(roll => roll)))
 
 console.log("A more complex test: Roll three dice. If the second die is even,\n" +
     "add all three together. If it is not, add the first two dice for a score.");
 
 console.log("Results of Test:");
 
-createTable(frequencyTest(() => {
+Probility.createTable(Probility.frequencyTest(() => {
     const roll1 = d61.roll();
     const roll2 = d62.roll();
     if (roll2 % 2 === 0) {
@@ -28,7 +28,7 @@ createTable(frequencyTest(() => {
 
 console.log("Results of enumeration");
 
-createTable(frequencyEnumeration(() => {
+Probility.createTable(Probility.frequencyEnumeration(() => {
     return d61.enumerate(roll1 => {
             return d62.enumerate(roll2 => {
                 return d63.enumerate(roll3 => {
@@ -49,7 +49,7 @@ console.log("With a loudCoin, which tells us to whisper or a yell a word, and a 
     "we can call loudCoin.flip()(wordD6.roll()) to be given a yelled or whispered face name: " +
     loudCoin.flip()(wordD6.roll()))
 
-createTable(frequencyEnumeration(() => {
+Probility.createTable(Probility.frequencyEnumeration(() => {
     return wordD6.enumerate(face => {
         return loudCoin.enumerate(funct => {
             return funct(face)

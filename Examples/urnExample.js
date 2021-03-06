@@ -1,4 +1,4 @@
-const {Probility, frequencyTest, createTable} = require('../Probility')
+const {Probility} = require('../Probility')
 
 class TwoColorUrn extends Probility {
     constructor(array, options) {
@@ -55,13 +55,13 @@ console.log("If we test these two urns, we'll see that the distribution of the b
 
 const ITERATIONS = 10_000
 
-createTable(frequencyTest(() => {
+Probility.createTable(Probility.frequencyTest(() => {
     return reinforcementUrn.choose()
 }, ITERATIONS))
 
 console.log("But the distribution of the balls in the second urn stay relatively close to one another:")
 
-createTable(frequencyTest(() => {
+Probility.createTable(Probility.frequencyTest(() => {
     return antiUrn.choose()
 }, ITERATIONS))
 
@@ -81,11 +81,11 @@ const convergingUrn = new InverseReinforcementUrn([{"1/2": minus1}, {"1/2": plus
 const divergingUrn = new ReinforcementUrn([{"1/2": plus1}, {"1/2": minus1}], {parseArray: true, usePool: false})
 
 
-frequencyTest(() => {
+Probility.frequencyTest(() => {
     counter1 = convergingUrn.choose()(counter1)
 }, ITERATIONS)
 
-frequencyTest(() => {
+Probility.frequencyTest(() => {
     counter2 = divergingUrn.choose()(counter2)
 }, ITERATIONS)
 

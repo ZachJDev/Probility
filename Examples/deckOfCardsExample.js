@@ -1,17 +1,17 @@
-const {createTable, frequencyEnumeration, frequencyTest} = require('../functions/EnumerationAndTableFunctions')
+const {Probility} = require('../Probility')
 const {StdDeck} = require('./classes/EX_DeckOfCards')
 
 const deck = new StdDeck(false)
 console.log("Because a deck's deal() method essentially removes it from the choice pool, we should expect \n" +
     "that testing that function will return equal probability for each card: ")
-createTable(frequencyTest(() => {
+Probility.createTable(Probility.frequencyTest(() => {
     const card = deck.deal()
     return `${card.rank}${card.suit}`
 }, 52 * 100))
 
 console.log("However, testing the chooseAndReplace() method will return close to, but not exactly the same probabilities:")
 deck.initCards()
-createTable(frequencyTest(() => {
+Probility.createTable(Probility.frequencyTest(() => {
     const card = deck.chooseAndReplace()
     return `${card.rank}${card.suit}`
 }, 52 * 100))
@@ -23,7 +23,7 @@ console.log(`There are ${aces} in the deck, or a ${aces.simplify()} chance of ch
 
 console.log("We can also use enumeration to find the chance of pulling two aces: \n")
 
-const withReplacing = frequencyEnumeration(() => {
+const withReplacing = Probility.frequencyEnumeration(() => {
     return deck.enumerate((card1) => {
         return deck.enumerate((card2) => {
             if (card1.rank === "A" && card2.rank === 'A') return "Two Aces"
@@ -32,7 +32,7 @@ const withReplacing = frequencyEnumeration(() => {
     })
 })
 
-const withoutReplacing = frequencyEnumeration(() => {
+const withoutReplacing = Probility.frequencyEnumeration(() => {
     return deck.enumerate(card1 => {
         let newDeck = StdDeck.fromDeck(deck)
             // TODO: find a better way of representing the previous card in the deck. Should be possible using the instance of Card1

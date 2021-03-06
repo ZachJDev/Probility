@@ -1,4 +1,4 @@
-const {Probility, createTable, frequencyTest, frequencyEnumeration} = require('../Probility');
+const {Probility} = require('../Probility');
 
 const range = (start, stop, step) =>
     Array.from({length: (stop - start) / step + 1}, (_, i) => start + (i * step));
@@ -62,7 +62,7 @@ console.log(`Probility will be used as a random number generator, generating num
 we can calculate that Pikachu has a ${asPercent(probOfEscape.valueOf())} chance of escaping Charizard.\n`)
 
 console.log("We can use frequencyTest() to see how often Pikachu escapes out of 10,000 tries: ")
-createTable(frequencyTest(() => {
+Probility.createTable(Probility.frequencyTest(() => {
     return pikachu.attemptEscape(charizard, 1) ? "Pikachu ran away!" : "Can't Escape!"
 }, 10000))
 
@@ -71,7 +71,7 @@ console.log("Even though I don't know the numbers as they are exactly, I will gu
 console.log("We can also create a chart of successive run attempts, as the chance of success increases as the number of attempts increase: ")
 for (let i = 1; i < 5; i++) {
     console.log(`Attempt #${i}: `)
-    createTable(frequencyEnumeration(() => speedTest.enumerate(num => {
+    Probility.createTable(Probility.frequencyEnumeration(() => speedTest.enumerate(num => {
         return pikachu.canEscape(pikachu.calcF(charizard, i), num) ? "Pikachu ran away!" : "Can't Escape!"
     })))
 }
