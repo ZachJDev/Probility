@@ -1,15 +1,12 @@
-const {Probility, frequencyTest, createTable } = require('../Probility')
+const {Probility, frequencyTest, createTable} = require('../Probility')
 
 class TwoColorUrn extends Probility {
     constructor(array, options) {
         super(array, options);
         this.choiceKeys = this.possibleChoices
-        if(this.choiceKeys.length > 2) throw new Error("Only Two initial choices allowed")
+        if (this.choiceKeys.length > 2) throw new Error("Only Two initial choices allowed")
         this.choice1 = this.choiceKeys[0]
         this.choice2 = this.choiceKeys[1]
-    }
-    chooseBall() {
-        return this.chooseFromPool()
     }
 }
 
@@ -17,8 +14,9 @@ class ReinforcementUrn extends TwoColorUrn {
     constructor(array, options) {
         super(array, options);
     }
+
     choose() {
-        const choice = super.chooseBall()
+        const choice = super.choose() // This is a type of problem where foregoing the pool is benefinial to the resource usage.
         this.addOne(choice);
         return choice;
     }
@@ -29,22 +27,25 @@ class InverseReinforcementUrn extends TwoColorUrn {
         super(array, options);
 
     }
+
     otherChoice(choice) {
-        if(choice === this.choice1) return this.choice2;
+        if (choice === this.choice1) return this.choice2;
         return this.choice1
     }
+
     choose() {
-        const choice = super.chooseBall()
-        this.addOne(this.otherChoice(choice))
-        return choice
-}
+        const choice = super.choose()
+        this.addOne(this.otherChoice(choice));
+        return choice;
+    }
 }
 
 const ball1 = "Red Ball"
 const ball2 = "Green Ball"
 
-const antiUrn = new InverseReinforcementUrn([{"1/2": ball1}, {"1/2": ball2}], {parseArray: true})
-const reinforcementUrn = new ReinforcementUrn([{"1/2": ball1}, {"1/2": ball2}], {parseArray: true})
+const antiUrn = new InverseReinforcementUrn([{"1/2": ball1}, {"1/2": ball2}], {parseArray: true, usePool: false})
+// Because we don't use the pool when chooing, we can skip ever using it in the instance
+const reinforcementUrn = new ReinforcementUrn([{"1/2": ball1}, {"1/2": ball2}], {parseArray: true, usePool: false})
 
 console.log("We've created two classes of urns: one that, when picked from, adds another ball of the same type that was picked.\n" +
     "The second type does the opposite: it adds another ball of the type NOT picked after each pick.\n")
@@ -64,7 +65,6 @@ createTable(frequencyTest(() => {
 }, ITERATIONS))
 
 
-
 let counter1 = 0;
 let counter2 = 0;
 
@@ -76,9 +76,8 @@ console.log("we can describe the same phenomenon by passing in two different fun
     "subtracts one from a number. When we call this repeatedly on a variable, we essentially measure how many more times \n" +
     "one function was called than the other.\n");
 
-const convergingUrn = new InverseReinforcementUrn([{"1/2": minus1}, {"1/2": plus1}], {parseArray: true})
-const divergingUrn = new ReinforcementUrn([{"1/2": plus1}, {"1/2": minus1}], {parseArray: true})
-
+const convergingUrn = new InverseReinforcementUrn([{"1/2": minus1}, {"1/2": plus1}], {parseArray: true, usePool: false})
+const divergingUrn = new ReinforcementUrn([{"1/2": plus1}, {"1/2": minus1}], {parseArray: true, usePool: false})
 
 
 frequencyTest(() => {

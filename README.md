@@ -88,10 +88,12 @@ Currently, there are three accepted options: `parseArray: boolean`, `usePool: bo
 which describe the amount of a given choice. It is `false` by default, which will cause the constructor to read the 
 array as a collection of discrete objects.
 
-`usePool : false` will skip any pool initialization and cause the `chooseFomPool()` method to return an error. This is
-useful when dealing with very large collections of objects that have different probabilities of being chosen. In most
-cases, `usePool` can be left as `true`; its only downside is the size of the created array, and the speed gained
-from `chooseFromPool()` is usually worth it.
+`usePool : false` will skip any pool initialization and cause the `chooseFomPool()` method to return an error.
+Because of the different implementations of `choose()` and `chooseFromPool()`, the best option will be based on each 
+use case: In general, `usePool: true` and `chooseFromPool()` are a better option for collections with many evenly 
+-distributed choices, e.g. representing a deck of playing cards. `usePool: false` and `choose()` are a better option 
+for collections with fewer and non-evenly-distributed choices, e.g. an urn with a two colors of balls with a 
+constantly-changing ratio between them.
 
 `total` can be set to a number representing the total number of options in a state description array (i.e., a parsed 
 array). It will **not** override the totals if whole numbers are used; it is useful when describing a collection 
@@ -129,7 +131,7 @@ frequencyTest(() => {
 // }
 ```
 
-### frequencyEnumeration(array)
+### `frequencyEnumeration(array)`
 
 Returns a mapping of all possible outcomes to their actual probability. It is meant to be used with
 Probility's `. enumerate()` method.
