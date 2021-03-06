@@ -1,6 +1,7 @@
 const ProbabilitiyCollection = require('./ProbabilityCollection')
 const RationalNumber = require('./ratNums')
 const objectHandler = require("./ObjectHandler")
+const {frequencyTest, frequencyEnumeration, createTable} = require('../functions/EnumerationAndTableFunctions')
 
 /**
  * The base Probility class. Represents a collection of things.
@@ -9,6 +10,7 @@ const objectHandler = require("./ObjectHandler")
  */
 class Probility {
     constructor(choices = [], options) {
+
         this.choices = new Map()
 
         this.options = {
@@ -35,7 +37,7 @@ class Probility {
         return Array.from(this.choices.keys())
     }
 
-    /** The number of total choices in a Probility collection. I.e. the sum of the total number of occurences of
+    /** The number of total choices in a Probility collection. I.e. the sum of the total number of occurrences of
      * each unique choice
      * */
     get numTotalChoices() {
@@ -46,9 +48,33 @@ class Probility {
             .reduce((acc, cur) => acc + cur, 0)
     }
 
+    /**
+     * NOT YET IMPLEMENTED. DO NOT USE. Should correctly copy an instance that uses a pool, but will not work correctly
+     * if it does not.
+     * @param probility
+     * @returns {*}
+     */
     static copyChoices(probility) {
         if (!probility instanceof Probility) throw new Error(`expected probility to be instance of Probility`)
-        return new Probility(probility.pool);
+        if(!probility.options.usePool) throw new Error("Can only copy instances that use pools.")
+        return new Probility(probility.pool,
+            {
+            usePool: probility.options.usePool,
+            total: probility.options.total,
+            parseArray: false
+            })
+    }
+
+    static frequencyTest(funct, n = 1000) {
+        return frequencyTest(funct, n)
+    }
+
+    static frequencyEnumeration(func) {
+        return frequencyEnumeration(func)
+    }
+
+    static createTable(sourceMap, sort = false, toTable = true) {
+        return createTable(sourceMap, sort, toTable)
     }
 
     /**
@@ -70,8 +96,6 @@ class Probility {
      * @param choices
      */
     initObject(choices) {
-        //
-        // TODO: add method for initializing an object
         for (let choice of choices) {
             let value = choice[0];
             let numberOf = choice[1].numerator
@@ -97,7 +121,7 @@ class Probility {
      */
 
     choose() {
-        if(this.options.usePool)
+        if (this.options.usePool)
             return this.chooseFromPool()
         return this.chooseWithSample()
     }
@@ -256,21 +280,20 @@ class Probility {
      */
 
     enumerate(func) {
-        if(!this.options.usePool) throw new Error("Cannot enumerate choice when the usePool option is false.")
+        if (!this.options.usePool) throw new Error("Cannot enumerate choice when the usePool option is false.")
         this.initPool() // Force a pool update, just in case someone manually sets options.usePool
         return this.pool.flatMap(func)
     }
-    /**
-     * The callback used for the enumerate method
-     * @callback enumerateCallback
-     * @param value
-     * @param index
-     * @param array
-     */
 }
 
 module.exports = Probility
-
+/**
+ * The callback used for the enumerate method
+ * @callback enumerateCallback
+ * @param value
+ * @param index
+ * @param array
+ */
 
 
 

@@ -6,7 +6,7 @@
  * @param toTable
  * @returns {void|Map<any, any>}
  */
-const createTable = (sourceMap, sort = false, toTable = true) => {
+const createTable = (sourceMap, sort, toTable) => {
     const results = new Map();
     Array.from(sourceMap.entries()).sort((a, b) => {
         if (sort) return a[1].valueOf() - b[1].valueOf() // Only sort if specified.
