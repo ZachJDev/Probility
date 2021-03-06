@@ -92,13 +92,24 @@ class Probility {
     }
 
     /**
+     * Gives a simple abstraction of the two choose methodsand returns the one that will work with the options
+     * @returns {*}
+     */
+
+    choose() {
+        if(this.options.usePool)
+            return this.chooseFromPool()
+        return this.chooseWithSample()
+    }
+
+    /**
      * Chooses a random object from the unique choices, and picks a random number between 0 and 1.
      * If the random number is lower than the probability of the chosen object, it returns the object.
-     * If not, it runs the algorithm again. MUCH slower than the .chooseFromPool(), but does not rely on the
+     * If not, it runs the algorithm again. Usually slower than the .chooseFromPool(), but does not rely on the
      * pool array.
      * @returns {any}
      */
-    choose() {
+    chooseWithSample() {
         if (this.numTotalChoices <= 0) throw new Error("No choices remain")
         while (true) {
             const choice = this.getRandomChoice()
@@ -240,25 +251,28 @@ class Probility {
     /**
      * Returns an array of each of the possible choices after being applied to the given function.
      * This method uses flatMap(), so the method can be called successively in the callback and still return a 1D array.
-     * @param {enumerateCallback} funct
+     * @param {enumerateCallback} func
      * @returns {unknown[]}
      */
-    enumerate(funct) {
-        if(!this.options.usePool) throw new Error("Cannot enumerate choice when usePool is false.")
-        return this.pool.flatMap(funct)
+
+    enumerate(func) {
+        if(!this.options.usePool) throw new Error("Cannot enumerate choice when the usePool option is false.")
+        this.initPool() // Force a pool update, just in case someone manually sets options.usePool
+        return this.pool.flatMap(func)
     }
+    /**
+     * The callback used for the enumerate method
+     * @callback enumerateCallback
+     * @param value
+     * @param index
+     * @param array
+     */
 }
 
 module.exports = Probility
 
 
-/**
- * The callback used for the enumerate method
- * @callback enumerateCallback
- * @param value
- * @param index
- * @param array
- */
+
 
 
 

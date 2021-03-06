@@ -9,7 +9,7 @@ class pickFrom256 extends Probility {
     }
 
     getNumber() {
-        return this.chooseFromPool()
+        return this.choose()
     }
 }
 

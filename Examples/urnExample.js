@@ -16,7 +16,8 @@ class ReinforcementUrn extends TwoColorUrn {
     }
 
     choose() {
-        const choice = super.choose() // This is a type of problem where foregoing the pool is benefinial to the resource usage.
+        // choose() will return chooseWithSample() when the usePool option is false and chooseFromPool() when it is true.
+        const choice = super.choose() // This is a type of problem where foregoing the pool is beneficial to the resource usage.
         this.addOne(choice);
         return choice;
     }
@@ -44,7 +45,7 @@ const ball1 = "Red Ball"
 const ball2 = "Green Ball"
 
 const antiUrn = new InverseReinforcementUrn([{"1/2": ball1}, {"1/2": ball2}], {parseArray: true, usePool: false})
-// Because we don't use the pool when chooing, we can skip ever using it in the instance
+// Because we don't use the pool when choosing, we can skip ever using it in the instance
 const reinforcementUrn = new ReinforcementUrn([{"1/2": ball1}, {"1/2": ball2}], {parseArray: true, usePool: false})
 
 console.log("We've created two classes of urns: one that, when picked from, adds another ball of the same type that was picked.\n" +

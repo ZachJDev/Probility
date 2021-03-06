@@ -9,11 +9,11 @@ class Die {
     }
 
     roll() {
-        return this.prob.chooseFromPool()
+        return this.prob.choose()
     }
 
     slowRoll() {
-        return this.prob.choose()
+        return this.prob.chooseWithSample()
     }
 
     enumerate(funct) {
@@ -29,7 +29,7 @@ class Coin extends Die {
     }
 
     flip() {
-        return this.prob.chooseFromPool()
+        return this.prob.choose()
     }
 }
 

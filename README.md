@@ -34,7 +34,7 @@ class SixSidedDie extends Probility {
     }
 
     roll() {
-        return this.chooseFromPool()
+        return this.choose()
     }
 
 ...
@@ -47,7 +47,7 @@ class SixSidedDie {
     }
 
     roll() {
-        return this.prob.chooseFromPool()
+        return this.prob.choose()
     }
 
 ...
@@ -60,7 +60,7 @@ class Urn extends Probility {
         super(stateDescription, options)
     }
     pick() {
-        return this.chooseFromPool()
+        return this.choose()
     }
 }
 

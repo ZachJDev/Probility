@@ -40,13 +40,13 @@ class StdDeck {
 
     getRandomCard() {
         if (this.prob.numTotalChoices <= 0) throw new Error("No cards remain. call method initCards() to refresh the deck")
-        const card = this.prob.chooseFromPool();
+        const card = this.prob.choose();
         this.prob.remove((val) => val === card)
         return card
     }
 
     chooseAndReplace() {
-        return this.prob.chooseFromPool()
+        return this.prob.choose()
     }
 
     deal() {
@@ -62,7 +62,7 @@ class StdDeck {
     }
 
     slowDealAndReplace() {
-        return this.prob.choose()
+        return this.prob.chooseWithSample()
     }
 
     probabilityOf(funct) {

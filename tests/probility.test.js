@@ -44,10 +44,10 @@ test("The pool length will be the same as numTotalChoices after initialization",
     expect(uniqueTest.pool.length).toEqual(uniqueTest.numTotalChoices)
 })
 
-// choose
+// chooseWithSample
 
-test("choose() will return a random item from the possible choices", () => {
-    expect(uniqueTest.choose()).toEqual(expect.anything())
+test("chooseWithSample() will return a random item from the possible choices", () => {
+    expect(uniqueTest.chooseWithSample()).toEqual(expect.anything())
     1
 })
 
