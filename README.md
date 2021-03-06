@@ -59,6 +59,7 @@ class Urn extends Probility {
     constructor(stateDescription, options) {
         super(stateDescription, options)
     }
+
     pick() {
         return this.choose()
     }
@@ -78,27 +79,27 @@ const quarterUrn = new Urn([{"25%": "red ball"}, {"25%": "green ball"},
 
 The array can either be a collection of discrete choices (like the `sixSidedDie` example), or a description of the
 probability state using ratios, percents, or the `remainder` identifier (like in the `urn` example) or whole numbers.
-Right now, whole numbers cannot be mixed with ratios or percents and cannot also have a `remainder` object in the same 
+Right now, whole numbers cannot be mixed with ratios or percents and cannot also have a `remainder` object in the same
 array. To describe the state in the second way, the `parseArray` option must be `true` when calling the constructor.
 
 #### `options`:
 
-Currently, there are three accepted options: `parseArray: boolean`, `usePool: boolean` and `total: number`. Setting 
-`parseArray` to true will cause the Probility constructor to interpret the array as an array of objects, each of 
-which describe the amount of a given choice. It is `false` by default, which will cause the constructor to read the 
-array as a collection of discrete objects.
+Currently, there are three accepted options: `parseArray: boolean`, `usePool: boolean` and `total: number`. Setting
+`parseArray` to true will cause the Probility constructor to interpret the array as an array of objects, each of which
+describe the amount of a given choice. It is `false` by default, which will cause the constructor to read the array as a
+collection of discrete objects.
 
-`usePool : false` will skip any pool initialization and cause the `chooseFomPool()` method to return an error.
-Because of the different implementations of `choose()` and `chooseFromPool()`, the best option will be based on each 
-use case: In general, `usePool: true` and `chooseFromPool()` are a better option for collections with many evenly 
--distributed choices, e.g. representing a deck of playing cards. `usePool: false` and `choose()` are a better option 
-for collections with fewer and non-evenly-distributed choices, e.g. an urn with a two colors of balls with a 
+`usePool : false` will skip any pool initialization and cause the `chooseFomPool()` method to return an error. Because
+of the different implementations of `chooseWithSample()` and `chooseFromPool()`, the best option will be based on each
+use case: In general, `usePool: true` and `chooseFromPool()` are a better option for collections with many evenly
+-distributed choices, e.g. representing a deck of playing cards. `usePool: false` and `chooseWithSample()` are a better
+option for collections with fewer and non-evenly-distributed choices, e.g. an urn with a two colors of balls with a
 constantly-changing ratio between them.
 
-`total` can be set to a number representing the total number of options in a state description array (i.e., a parsed 
-array). It will **not** override the totals if whole numbers are used; it is useful when describing a collection 
-with ratios and percents that will later need choices added or removed. A high total will correlate to a large pool, 
-so space concerns may factor into it's usefulness for your use case. 
+`total` can be set to a number representing the total number of options in a state description array (i.e., a parsed
+array). It will **not** override the totals if whole numbers are used; it is useful when describing a collection with
+ratios and percents that will later need choices added or removed. A high total will correlate to a large pool, so space
+concerns may factor into it's usefulness for your use case.
 
 ### `frequencyTest(callback, n)`
 
