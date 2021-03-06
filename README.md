@@ -111,7 +111,7 @@ const {Probility} = require('Probility')
 
 const d6 = new SixSidedDie();
 
-Probility(() => d6.roll(), 6000)
+Probility.frequencyTest(() => d6.roll(), 6000)
 
 //  Map(6) {
 //    6 => RationalNumber { numerator: 1019, denominator: 6000 },
