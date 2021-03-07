@@ -1,6 +1,6 @@
 # Probility
 
-Probility is a WIP progress library that aims to provide an easy-to-understand interface for creating probability
+Probility is an evolving library that aims to provide an easy-to-understand interface for creating probability
 distributions and generating data from those distributions.
 
 Probility provides both a class to interface with data collections and a set of functions to generate practical tests of

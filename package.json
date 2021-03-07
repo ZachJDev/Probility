@@ -1,8 +1,7 @@
 {
   "name": "probility",
-  "version": "1.0.1",
+  "version": "1.0.3",
   "description": "",
-  "private": "true",
   "main": "Probility.js",
   "scripts": {
     "test": "jest",
