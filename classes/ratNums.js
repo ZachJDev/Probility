@@ -1,7 +1,7 @@
 const gcd = require("../functions/gcd")
 const lcm = require("../functions/lcm")
 
-module.exports = class RationalNumber {
+class RationalNumber {
     constructor(numerator, denominator = 1) {
         if (numerator % 1 !== 0 || denominator % 1 !== 0) throw new Error("numerator and denominator must be whole numbers.")
         if (denominator === 0) throw new Error("Dividing by zero is undefined");
@@ -93,3 +93,4 @@ module.exports = class RationalNumber {
     }
 }
 
+module.exports = RationalNumber

@@ -1,4 +1,4 @@
-RationalNumber = require('../classes/ratNums')
+const RationalNumber = require('../classes/ratNums')
 
 const x = new RationalNumber(31, 948);
 const y = new RationalNumber(511, 1937);

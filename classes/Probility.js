@@ -1,4 +1,4 @@
-const ProbabilitiyCollection = require('./ProbabilityCollection')
+const ProbabilityCollection = require('./ProbabilityCollection')
 const RationalNumber = require('./ratNums')
 const objectHandler = require("./ObjectHandler")
 const {frequencyTest, frequencyEnumeration, createTable} = require('../functions/EnumerationAndTableFunctions')
@@ -164,7 +164,7 @@ class Probility {
     add(choice, num) {
         if (num > 0) {
             this.choices.get(choice) ? this.choices.get(choice).increment(num) :
-                this.choices.set(choice, new ProbabilitiyCollection(choice, num))
+                this.choices.set(choice, new ProbabilityCollection(choice, num))
             if (this.options.usePool) this.initPool()
         }
         return this
@@ -294,11 +294,3 @@ module.exports = Probility
  * @param index
  * @param array
  */
-
-
-
-
-
-
-
-

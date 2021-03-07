@@ -6,7 +6,7 @@ distributions and generating data from those distributions.
 Probility provides both a class to interface with data collections and a set of functions to generate practical tests of
 outcomes and theoretical enumerations of expected outcomes for complex probability rules.
 
-To see the current power of Probility, please check out the "Examples" folder and run the sample code in Node. Example
+To see the current power of Probility, please check out the [Examples Folder](https://github.com/ZachJDev/Probility/tree/main/Examples) and run the sample code in Node. Example
 output is provided in the Markdown files, but running the code and looking at how the examples are constructed should
 give a much clearer picture of how everything works behind the scenes.
 

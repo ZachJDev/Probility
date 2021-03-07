@@ -1,7 +1,7 @@
 const RationalNumber = require('../classes/ratNums')
 
 
-module.exports = createFrequencyTest = (funct, n) => {
+ const createFrequencyTest = (funct, n) => {
     const results = new Map()
     for (let i = 0; i < n; i++) {
         const x = funct()
@@ -12,3 +12,5 @@ module.exports = createFrequencyTest = (funct, n) => {
     return results
 }
 
+
+module.exports = createFrequencyTest

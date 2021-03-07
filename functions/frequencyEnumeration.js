@@ -6,7 +6,7 @@ const RationalNumber = require('../classes/ratNums')
  * @param funct
  * @returns {Map<any, RationalNumber>}
  */
-frequencyEnumeration = (funct) => {
+const frequencyEnumeration = (funct) => {
     const results = new Map();
     const array = funct();
     const totalNumber = array.length;
