@@ -1,4 +1,4 @@
-const {Probility} = require('../Probility')
+const Probility = require('../Probility')
 
 class TwoColorUrn extends Probility {
     constructor(array, options) {

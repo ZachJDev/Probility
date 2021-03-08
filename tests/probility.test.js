@@ -1,4 +1,4 @@
-const Probility = require('../classes/Probility')
+const Probility = require('../Probility')
 
 // Total Choices
 

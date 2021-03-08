@@ -1,5 +1,5 @@
 const {D6, Coin} = require('./classes/EX_dice')
-const {Probility} = require('../Probility')
+const Probility = require('../Probility')
 
 // Examples //
 const d61 = new D6()

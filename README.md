@@ -18,6 +18,15 @@ this project. I hope that, as it works now, Probility provides an easy way to in
 probabilistic collections of data. In the future, I hope to make it even more robust by allowing developers to store and
 manipulate different states of a single Probility instance.
 
+## Usage
+
+Probility can be installed from npm with the following command:
+
+```shell
+npm install probility
+```
+
+
 ## API Reference
 
 **More Coming Soon!!**
@@ -28,7 +37,7 @@ The main class for Probility collections. It can be assigned directly, extended,
 array and an optional options object during initialization.
 
 ```Javascript
-const {Probility} = require('Probility')
+const Probility = require('Probility')
 
 const sixSidedDie = new Probility([1, 2, 3, 4, 5, 6])
 
@@ -112,7 +121,7 @@ Static. Calls the callback `n`  times and returns a new Map of the results mappe
 occurred out of `n`. The values of the Map are Rational Numbers, an included class:
 
 ```javascript
-const {Probility} = require('Probility')
+const Probility = require('probility')
 
 const d6 = new SixSidedDie();
 
@@ -143,7 +152,7 @@ Static. Returns a mapping of all possible outcomes to their actual probability. 
 Probility's `. enumerate()` method.
 
 ```javascript
-const {Probility} = require("Probility");
+const Probility = require("Probility");
 
 Probility.frequencyEnumeration(() => {
     return d6.enumerate((roll1) => {

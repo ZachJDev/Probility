@@ -1,4 +1,4 @@
-const {Probility} = require('../Probility')
+const Probility= require('../Probility')
 const {StdDeck} = require('./classes/EX_DeckOfCards')
 
 const deck = new StdDeck(false)
