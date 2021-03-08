@@ -26,22 +26,24 @@ Probility can be installed from npm with the following command:
 npm install probility
 ```
 
-
 ## API Reference
-
-**More Coming Soon!!**
 
 ### `class Probility(array, [options])`
 
-The main class for Probility collections. It can be assigned directly, extended, or wrapped in a new class. It takes an
-array and an optional options object during initialization.
+The main class for Probility collections. It takes an array and an optional options object during initialization.
+
+It can be assigned directly:
+
+```javascript
+const Probility = require('Probility')
+const d6 = new Probility([1, 2, 3, 4, 5, 6])
+d6.choose() // returns a random number from the array
+```
+
+Or as a parent class:
 
 ```Javascript
-const Probility = require('Probility')
 
-const sixSidedDie = new Probility([1, 2, 3, 4, 5, 6])
-
-//////// OR /////////
 class SixSidedDie extends Probility {
     constructor() {
         super([1, 2, 3, 4, 5, 6])
@@ -53,8 +55,12 @@ class SixSidedDie extends Probility {
 
 ...
 }
+```
 
-//////// OR /////////
+Or as a dependency for an entirely new class.
+
+```javascript
+
 class SixSidedDie {
     constructor(faces = [1, 2, 3, 4, 5, 6]) {
         this.prob = new Probility(faces) // Access all the Probility methods in the prob property
@@ -66,9 +72,12 @@ class SixSidedDie {
 
 ...
 }
+```
 
-// creating a new instance with an array describing the state:
+In addition to passing an array with discrete objects, an alternative syntax exists to describe the ratios of the
+included choices:
 
+```javascript
 class Urn extends Probility {
     constructor(stateDescription, options) {
         super(stateDescription, options)
@@ -78,6 +87,8 @@ class Urn extends Probility {
         return this.choose()
     }
 }
+
+// creating a new instance with an array describing the state:
 
 const quarterUrn = new Urn([{"25%": "red ball"}, {"25%": "green ball"},
     {"1/4": "purple ball"},
@@ -95,6 +106,14 @@ The array can either be a collection of discrete choices (like the `sixSidedDie`
 probability state using ratios, percents, or the `remainder` identifier (like in the `urn` example) or whole numbers.
 Right now, whole numbers cannot be mixed with ratios or percents and cannot also have a `remainder` object in the same
 array. To describe the state in the second way, the `parseArray` option must be `true` when calling the constructor.
+
+Probility will handle most types of objects as choices, including functions:
+
+```javascript
+const loudCoin = new Probility([(str) => str.toUpperCase(), (str) => str.toLowerCase()]);
+loudCoin.choose()("Hello") // HELLO
+loudCoin.choose()("Hello") // hello
+```
 
 #### `options`:
 
@@ -152,7 +171,8 @@ Static. Returns a mapping of all possible outcomes to their actual probability. 
 Probility's `. enumerate()` method.
 
 ```javascript
-const Probility = require("Probility");
+const
+    Probility = require("Probility");
 
 Probility.frequencyEnumeration(() => {
     return d6.enumerate((roll1) => {
@@ -228,8 +248,8 @@ weightedD6.choose() // 6 -- calls chooseFromPool()
 
 ### `instance.initPool()`
 
-Initializes an instance's pool. Called internally, but can be used to force a pool when an instance was not created with
-one.
+Initializes an instance's pool. Mostly used internally, but can be used to force a pool when an instance was not created
+with one.
 
 ```javascript
 const coin = new Probility([{"1/2": "heads"}, {"1/2": "tails"}], {parseArray: true, usePool: false});
@@ -251,7 +271,7 @@ d6.possibleChoices // [1,2,3,4,5,6,7]
 
 ### `instance.addOne(choice)`
 
-Shorthand for `instance.add(choice, 1)`
+Shorthand for `instance.add(choice, 1)`.
 
 ### `instance.remove(predicateCallback, num)`
 
@@ -260,6 +280,9 @@ Returns the Probility instance. iterates over the array and removes up to `num` 
 
 ```javascript
 const smallDeck = new Probility(["1H", "6D", "JS", "KS"]);
+
+// Removing a specific choice:
+
 smallDeck.remove(card => card === "JS", 1);
 smallDeck.possibleChoices // ["1H", "6D", "KS"]
 
