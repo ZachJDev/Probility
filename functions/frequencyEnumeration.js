@@ -1,4 +1,4 @@
-const RationalNumber = require('../classes/ratNums')
+const RationalNumber = require('probility-rational-numbers')
 
 /**
  * Enumerates the results of a given function, which should return an array. Written to be used the .enumerate()

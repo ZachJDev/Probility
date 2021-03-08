@@ -1,5 +1,5 @@
 const ProbabilityCollection = require('./ProbabilityCollection')
-const RationalNumber = require('./ratNums')
+const RationalNumber = require('probility-rational-numbers')
 const objectHandler = require("./ObjectHandler")
 const {frequencyTest, frequencyEnumeration, createTable} = require('../functions/EnumerationAndTableFunctions')
 

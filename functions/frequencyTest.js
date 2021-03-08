@@ -1,4 +1,4 @@
-const RationalNumber = require('../classes/ratNums')
+const RationalNumber = require('probility-rational-numbers')
 
 
  const createFrequencyTest = (funct, n) => {
