@@ -16,8 +16,10 @@ class ProbilityObjectHandler {
             const value = entry[key]
             // Handle remainders
             if (key === 'remainder') {
-                if (remainderSet)
+                if (!remainderSet) {
+                    remainderSet = true;
                     remainderVal = value;
+                }
                 else throw new Error("Only a single Remainder key can be processed")
             } else {
                 const ratio = this.parseKey(key);
@@ -33,7 +35,7 @@ class ProbilityObjectHandler {
     makeFinalMap(initialMap, remainderVal, remainderSet) {
         let normalBase; // will hold normalized base
         if (this.areAllWhole(initialMap)) {
-            if (remainderVal !== null) throw new Error("Remainders cannot be used with whole Numbers.")
+            if (remainderVal !== undefined) throw new Error("Remainders cannot be used with whole Numbers.")
             normalBase = this.getBaseFromWholes(initialMap);
         } // adds whole numbers for new base
         else normalBase = RationalNumber.normalizeBases(...Array.from(initialMap.values())) // normalizes other bases
