@@ -8,18 +8,18 @@ class ProbilityObjectHandler {
     parseArray(array, total) {
         this.tempTotal = total;
         const tempMap = new Map()
-        let remainderVal = null
+        let remainderVal;
+        let remainderSet = false;
 
         for (let entry of array) {
             const key = Object.keys(entry)[0]
             const value = entry[key]
             // Handle remainders
             if (key === 'remainder') {
-                if (!remainderVal)
+                if (remainderSet)
                     remainderVal = value;
                 else throw new Error("Only a single Remainder key can be processed")
             } else {
-
                 const ratio = this.parseKey(key);
                 if (ratio.isNegative) throw new Error(`values cannot have negative probabilities received ${key}`)
                 if (!ratio.isZero)
@@ -27,10 +27,10 @@ class ProbilityObjectHandler {
             }
         }
         this.tempTotal = null; // reset tempTotal.
-        return this.makeFinalMap(tempMap, remainderVal)
+        return this.makeFinalMap(tempMap, remainderVal, remainderSet)
     }
 
-    makeFinalMap(initialMap, remainderVal) {
+    makeFinalMap(initialMap, remainderVal, remainderSet) {
         let normalBase; // will hold normalized base
         if (this.areAllWhole(initialMap)) {
             if (remainderVal !== null) throw new Error("Remainders cannot be used with whole Numbers.")
@@ -54,7 +54,7 @@ class ProbilityObjectHandler {
         }
         // set the remainder to whatever is left over.
         const remainder = new RationalNumber(normalBase, normalBase).subtract(finalTest)
-        if (remainderVal) finalMap.set(remainderVal, remainder)
+        if (remainderSet) finalMap.set(remainderVal, remainder)
 
         if (this.isTotalWhole(finalMap, normalBase)) return finalMap
         else throw new Error("Total of all ratios does not equal 1.")
