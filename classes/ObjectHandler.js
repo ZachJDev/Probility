@@ -1,4 +1,6 @@
 const RationalNumber = require('probility-rational-numbers')
+const TypeDeterminer = require('./TypeDeterminer');
+
 
 class ProbilityObjectHandler {
     constructor() {
@@ -9,10 +11,10 @@ class ProbilityObjectHandler {
         this.tempTotal = total;
         const tempMap = new Map()
         let remainderVal;
-        let remainderSet = false;
+        let remainderSet = false; //seperated from val to allow for the remainder value to be a falsy value.
 
         for (let entry of array) {
-            const key = Object.keys(entry)[0]
+            const key = Object.keys(entry)[0] // ignore anything but the first key
             const value = entry[key]
             // Handle remainders
             if (key === 'remainder') {
@@ -22,7 +24,8 @@ class ProbilityObjectHandler {
                 }
                 else throw new Error("Only a single Remainder key can be processed")
             } else {
-                const ratio = this.parseKey(key);
+                const interRatio = new TypeDeterminer().stringToTypedNum(key)
+                const ratio = interRatio.parse().newBase(this.tempTotal)
                 if (ratio.isNegative) throw new Error(`values cannot have negative probabilities received ${key}`)
                 if (!ratio.isZero)
                     tempMap.set(value, ratio)
@@ -35,8 +38,10 @@ class ProbilityObjectHandler {
     makeFinalMap(initialMap, remainderVal, remainderSet) {
         let normalBase; // will hold normalized base
         if (this.areAllWhole(initialMap)) {
-            if (remainderVal !== undefined) throw new Error("Remainders cannot be used with whole Numbers.")
-            normalBase = this.getBaseFromWholes(initialMap);
+            if (remainderVal !== undefined) {
+                throw new Error('Remainders cannot be used with whole Numbers.');
+            }
+            normalBase = this.getBaseFromWholes(initialMap); // a better designed system would have a single method to normalize bases, regardless of type.
         } // adds whole numbers for new base
         else normalBase = RationalNumber.normalizeBases(...Array.from(initialMap.values())) // normalizes other bases
 
@@ -60,58 +65,6 @@ class ProbilityObjectHandler {
 
         if (this.isTotalWhole(finalMap, normalBase)) return finalMap
         else throw new Error("Total of all ratios does not equal 1.")
-    }
-
-    parseKey(key) {
-        if (this.keyIsNumber(key)) {
-            return this.parseNumber(key)
-        } else if (this.keyIsPercent(key)) {
-            return this.parsePercent(key)
-        } else if (this.keyIsRationalNumber(key)) {
-            return this.parseRationalNumber(key)
-        } else if (this.keyIsRemainder(key)) {
-            return "remainder"
-        } else throw new Error(`Unrecognized format in '${key}'. Enter a percent with fewer than three decimal points, fraction, whole number, or 'Remainder'.`)
-    }
-
-    keyIsNumber(key) {
-        // Whole numbers are not handled well.
-        const numberRegEx = new RegExp(/^-?\d+$/)
-        return numberRegEx.test(key)
-    }
-
-    keyIsRationalNumber(key) {
-        const rationalNumberRegEx = new RegExp(/^-?\d+ *\/ *-?\d+$/)
-        return rationalNumberRegEx.test(key)
-    }
-
-    keyIsRemainder(key) {
-        return key.toLowerCase() === "remainder"
-    }
-
-    keyIsPercent(key) {
-        const percentRegEx = new RegExp(/^-?\d+.?\d{0,2}%$/)
-        return percentRegEx.test(key)
-    }
-
-    parseNumber(num) {
-        return new RationalNumber(num, 1);
-    }
-
-    parsePercent(num) {
-        const asNum = num.split("%")[0] // Get rid of the percent with split("%") and get the value out of the array.
-        if (asNum > 100) throw new Error("Cannot add more than 100%")
-        // Handles percents with up to two decimal places.
-        return new RationalNumber(asNum * 100, 10000).simplify().newBase(this.tempTotal)
-
-    }
-
-    parseRationalNumber(ratNum) {
-        const nums = ratNum.split("/")
-        const newNum = new RationalNumber(nums[0], nums[1]).newBase(this.tempTotal)
-        if (newNum.valueOf() > 1) throw new Error("Rational numbers must not be over one.")
-        return newNum
-
     }
 
     areAllWhole(map) { // Bad name?

@@ -16,7 +16,8 @@ class Probility {
         this.options = {
             parseArray: options?.parseArray ?? false,
             usePool: options?.usePool ?? true,
-            total: options?.total // if total isn't specified, keep it null.
+            total: options?.total, // if total isn't specified, keep it null.
+            random: options?.random ?? Math.random
         }
 
         if (this.options.parseArray) {
@@ -55,7 +56,7 @@ class Probility {
      * @returns {*}
      */
     static copyChoices(probility) {
-        if (!probility instanceof Probility) throw new Error(`expected probility to be instance of Probility`)
+        if (probility instanceof !Probility) throw new Error(`expected probility to be instance of Probility`)
         if(!probility.options.usePool) throw new Error("Can only copy instances that use pools.")
         return new Probility(probility.pool,
             {
@@ -139,7 +140,7 @@ class Probility {
             const choice = this.getRandomChoice()
             const p = this.singleChoiceProbability(choice).valueOf()
                 .valueOf() // Probability of choosing `choice`
-            const r = Math.random(); // a random number between 0 and 1
+            const r = this.options.random(); // a random number between 0 and 1
             if (r < p) return this.choices.get(choice).value
         }
     }
@@ -260,7 +261,7 @@ class Probility {
      * @returns {number}
      */
     getRandomNumberFromTotal() {
-        return Math.floor(Math.random() * this.pool.length)
+        return Math.floor(this.options.random() * this.pool.length)
     }
 
     /**
@@ -269,7 +270,7 @@ class Probility {
      * @returns {number}
      */
     getRandomNumberFromUnique() {
-        return Math.floor(Math.random() * Math.floor(this.numUniqueChoices));
+        return Math.floor(this.options.random() * Math.floor(this.numUniqueChoices));
     }
 
     /**
